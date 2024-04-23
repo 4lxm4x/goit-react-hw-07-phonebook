@@ -3,11 +3,22 @@ import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/slices/contactsSlice';
 import { Notify } from 'notiflix';
+import { useEffect } from 'react';
+import { fetchContacts } from '../../redux/operations/operations';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
-  const namesInState = contacts.map(contact => contact.name);
+  useEffect(
+    () =>
+      function fetchData() {
+        dispatch(fetchContacts());
+      },
+    [dispatch]
+  );
+  const contacts = useSelector(state => state.contacts.items);
+  // console.log('🚀 ~ ContactForm ~ contacts:', contacts);
+  const namesInState = contacts.map(contact => contact.items.name);
+  console.log('🚀 ~ ContactForm ~ namesInState:', namesInState);
 
   const onHandleFormSubmit = e => {
     e.preventDefault();
