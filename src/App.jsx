@@ -9,9 +9,9 @@ export default function App() {
     <div className="mainDiv">
       <h1>Phonebook</h1>
       <ContactForm />
-      <h1>Contacts</h1>
       <Filter />
-      <Contacts></Contacts>
+      <h1>Contacts</h1>
+      <Contacts />
     </div>
   );
 }

@@ -1,19 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './Contacts.css';
-import { deleteContact } from '../../redux/slices/contactsSlice';
+
 // import { useEffect } from 'react';
-// import { fetchContacts } from '../../redux/operations/operations';
+import { deleteContact } from '../../redux/operations/operations';
 // import { createSelector } from '@reduxjs/toolkit';
 
 export default function Contacts() {
-  console.log('remount');
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
-  console.log('🚀 ~ Contacts ~ state.contacts.items:', contacts);
-
+  const contacts = useSelector(state => {
+    console.log('rerender with new', state.contacts.items);
+    return state.contacts.items;
+  });
   const filter = useSelector(state => state.filter);
 
   function onDelete(e) {
+    console.log(e.target.id);
     dispatch(deleteContact(e.target.id));
   }
 
@@ -26,7 +27,7 @@ export default function Contacts() {
       {filteredContacts.map(contact => {
         return (
           <li key={contact.id}>
-            {contact.name}: {contact.number}
+            {contact.name}: {contact.phone}
             <button className="deleteBtn" onClick={onDelete} id={contact.id}>
               Delete
             </button>

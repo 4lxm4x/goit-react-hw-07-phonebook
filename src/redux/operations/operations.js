@@ -13,3 +13,25 @@ export const fetchContacts = createAsyncThunk(
     }
   }
 );
+
+export const addContact = createAsyncThunk(
+  'contacts/add',
+  async (contact, rejectWithValue) => {
+    try {
+      await API.addContact(contact);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/delete',
+  async (id, rejectWithValue) => {
+    try {
+      await API.deleteContact(id);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
