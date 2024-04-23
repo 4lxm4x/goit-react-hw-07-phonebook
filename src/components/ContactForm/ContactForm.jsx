@@ -6,7 +6,7 @@ import { Notify } from 'notiflix';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const namesInState = contacts.map(contact => contact.name);
 
   const onHandleFormSubmit = e => {
