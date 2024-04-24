@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from '../initialState';
+
 import {
   fetchContacts,
   addContact,
   deleteContact,
 } from '../operations/operations';
+
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -51,6 +53,18 @@ const contactsSlice = createSlice({
       })
       .addCase(deleteContact.rejected, (state, action) => {
         return { ...state, isLoading: false, error: action.payload };
+      });
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.pending, state => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        return { ...state, items: action.payload, isLoading: false };
+      })
+      .addCase(fetchContacts.rejected, (state, action) => {
+        return { ...state, error: action.payload };
       });
   },
 });

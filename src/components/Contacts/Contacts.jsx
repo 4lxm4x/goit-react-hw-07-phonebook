@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './Contacts.css';
 
+
 import { deleteContact } from '../../redux/operations/operations';
 
 export default function Contacts() {
@@ -8,7 +9,12 @@ export default function Contacts() {
   const contacts = useSelector(state => {
     return state.contacts.items;
   });
+
   const filter = useSelector(state => state.filter);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   function onDelete(e) {
     dispatch(deleteContact(e.target.id));
