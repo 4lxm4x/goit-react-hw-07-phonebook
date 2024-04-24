@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './Contacts.css';
-import { deleteContact } from '../../redux/slices/contactsSlice';
-import { useEffect } from 'react';
-import { fetchContacts } from '../../redux/operations/operations';
-// import { createSelector } from '@reduxjs/toolkit';
+
+
+import { deleteContact } from '../../redux/operations/operations';
 
 export default function Contacts() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const contacts = useSelector(state => {
+    return state.contacts.items;
+  });
+
   const filter = useSelector(state => state.filter);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export default function Contacts() {
       {filteredContacts.map(contact => {
         return (
           <li key={contact.id}>
-            {contact.name}: {contact.number}
+            {contact.name}: {contact.phone}
             <button className="deleteBtn" onClick={onDelete} id={contact.id}>
               Delete
             </button>
