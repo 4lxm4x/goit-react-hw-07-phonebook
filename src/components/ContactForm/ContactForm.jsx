@@ -1,7 +1,5 @@
 import './ContactForm.css';
-// import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-// import { addContact } from '../../redux/slices/contactsSlice';
 import { Notify } from 'notiflix';
 import { useEffect } from 'react';
 import { fetchContacts, addContact } from '../../redux/operations/operations';
@@ -23,14 +21,13 @@ export default function ContactForm() {
   const onHandleFormSubmit = e => {
     e.preventDefault();
     const name = e.target.elements.name.value;
-    const phone = e.target.elements.number.value;
+    const phone = e.target.elements.number.value.replaceAll(' ', '');
     if (namesInState.includes(name)) {
       Notify.failure('Name already exist');
       e.target.reset();
     } else {
       dispatch(
         addContact({
-          // id: nanoid(),
           name,
           phone,
         })

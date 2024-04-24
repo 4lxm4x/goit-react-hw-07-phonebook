@@ -9,16 +9,6 @@ import {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: initialState.contacts,
-  reducers: {
-    // addContact(state, action) {
-    //   state.push(action.payload);
-    // },
-    // deleteContact(state, action) {
-    //   return state.filter(contact => {
-    //     return contact.id !== action.payload;
-    //   });
-    // },
-  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, state => {
@@ -37,10 +27,11 @@ const contactsSlice = createSlice({
       .addCase(addContact.pending, state => {
         return { ...state, isLoading: true };
       })
-      .addCase(addContact.fulfilled, state => {
+      .addCase(addContact.fulfilled, (state, action) => {
         return {
           ...state,
           isLoading: false,
+          items: [...state.items, action.payload],
         };
       })
       .addCase(addContact.rejected, (state, action) => {
@@ -49,10 +40,13 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.pending, state => {
         return { ...state, isLoading: true };
       })
-      .addCase(deleteContact.fulfilled, state => {
+      .addCase(deleteContact.fulfilled, (state, action) => {
         return {
           ...state,
           isLoading: false,
+          items: state.items.filter(item => {
+            return item.id !== action.payload.id;
+          }),
         };
       })
       .addCase(deleteContact.rejected, (state, action) => {
